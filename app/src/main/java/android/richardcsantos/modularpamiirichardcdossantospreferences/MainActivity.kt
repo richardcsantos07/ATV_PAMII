@@ -4,10 +4,13 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.richardcsantos.modularpamiirichardcdossantospreferences.databinding.ActivityMainBinding
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -29,29 +32,44 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.color1.setOnClickListener {
             color = "#E91E63"
-            binding.main.setBackgroundColor(Color.parseColor(color))
+            saveColor(color)
         }
 
         binding.color2.setOnClickListener {
             color = "#673AB7"
-            binding.main.setBackgroundColor(Color.parseColor(color))
+            saveColor(color)
         }
 
         binding.color3.setOnClickListener {
             color = "#FFC107"
-            binding.main.setBackgroundColor(Color.parseColor(color))
+            saveColor(color)
         }
 
         binding.color4.setOnClickListener {
             color = "#009688"
-            binding.main.setBackgroundColor(Color.parseColor(color))
+            saveColor(color)
         }
 
         binding.color5.setOnClickListener {
             color = "#FF5722"
-            binding.main.setBackgroundColor(Color.parseColor(color))
+            saveColor(color)
         }
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val preferences = getSharedPreferences(NAME_FILE, MODE_PRIVATE)
+        val color = preferences.getString("color", "")
+
+        if (color!!.isNotEmpty()) {
+            binding.main.setBackgroundColor(Color.parseColor(color))
+        }
+    }
+
+    private fun saveColor(color: String) {
         binding.changeColor.setOnClickListener {
             binding.main.setBackgroundColor(Color.parseColor(color))
             val preferences = getSharedPreferences(NAME_FILE, MODE_PRIVATE)
@@ -62,10 +80,20 @@ class MainActivity : AppCompatActivity() {
             editor.putString("email", "Richard")
             editor.apply()
 
+
         }
     }
 
-    private fun saveColor(color: String) {
+    private fun snackBar(view: View) {
+        val snackbar =
+            Snackbar.make(view, "Cor de fundo alterada com sucesso", Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction("OK") {
 
+        }
+
+        snackbar.setActionTextColor(Color.BLUE)
+        snackbar.setBackgroundTint(Color.LTGRAY)
+        snackbar.setTextColor(Color.GREEN)
+        snackbar.show()
     }
 }
