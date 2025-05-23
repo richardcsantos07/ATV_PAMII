@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding.color2.setOnClickListener {
             color = "#673AB7"
             saveColor(color)
+
         }
 
         binding.color3.setOnClickListener {
@@ -70,19 +71,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun saveColor(color: String) {
-        binding.changeColor.setOnClickListener {
-            binding.main.setBackgroundColor(Color.parseColor(color))
-            val preferences = getSharedPreferences(NAME_FILE, MODE_PRIVATE)
-            val editor = preferences.edit()
-            editor.putString("color", color)
-            editor.putString("nome", "Richard")
-            editor.putString("sobrenome", "Dos Santos")
-            editor.putString("email", "Richard")
-            editor.apply()
+        binding.main.setBackgroundColor(Color.parseColor(color))
 
+        val preferences = getSharedPreferences(NAME_FILE, MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.putString("color", color)
+        editor.putString("nome", "Richard")
+        editor.putString("sobrenome", "Dos Santos")
+        editor.putString("email", "richardcamargodosantos@gmail.com")
+        editor.apply()
 
-        }
+        snackBar(binding.root) // <-- Chamada aqui
     }
+
 
     private fun snackBar(view: View) {
         val snackbar =
